@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Page d'accueil</title>
+  <link rel="stylesheet" href="style.css"/>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+  <div class="background-container">
+    <!-- Icônes du menu -->
+    <div class="menu-icons">
+      <div class="icon-box red" onclick="toggleLeconList()">
+        <i class="fas fa-book"></i>
+        <span>Mes leçons</span>
+      </div>
+      <div class="icon-box blue">
+        <i class="fas fa-pencil-alt"></i>
+        <span>Mes activités</span>
+      </div>
+      <div class="icon-box green">
+        <i class="fas fa-gamepad"></i>
+        <span>Histoire et jeux</span>
+      </div>
+      <div class="icon-box orange">
+        <i class="fas fa-envelope"></i>
+        <span>Contact</span>
+      </div>
+    </div>
+
+    <!-- Liste déroulante des leçons -->
+    <div id="leconList" class="lecon-list">
+      <select onchange="openLecon(this.value)">
+        <option value="">Choisir une leçon</option>
+        <option value="1">La phrase verbale et nominale</option>
+        <option value="2">Les COD et COI</option>
+        <option value="3">L'accord sujet-verbe</option>
+      </select>
+    </div>
+
+    <!-- Texte central -->
+    <div class="center-text">
+      <h1>L'école à la maison, c'est facile et amusant</h1>
+    </div>
+
+    <!-- Texte en bas -->
+    <div class="bottom-text">
+      <p>Avec maîtresse Samira</p>
+    </div>
+  </div>
+
+  <!-- Fenêtre modale des leçons -->
+  <div id="leconsModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeLecons()">&times;</span>
+      <div id="lecon-content" class="lecon-content"></div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

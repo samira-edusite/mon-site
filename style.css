@@ -1,0 +1,201 @@
+/* Mise en page de base */
+body, html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  font-family: 'Arial', sans-serif;
+}
+
+.background-container {
+  background-image: url('mon_image.jpeg');
+  background-size: cover;
+  background-position: center;
+  height: 100vh;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  text-align: center;
+  color: white;
+}
+
+/* Icônes du menu */
+.menu-icons {
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+  padding-top: 20px;
+  flex-wrap: wrap;
+}
+
+.icon-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 12px 16px;
+  border-radius: 15px;
+  background-color: rgba(0, 0, 0, 0.5); /* Fond semi-transparent */
+  color: white;
+  cursor: pointer;
+  font-size: 18px;
+  transition: transform 0.3s, background-color 0.3s;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+  min-width: 120px;
+}
+
+.icon-box:hover {
+  transform: scale(1.1);
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.icon-box i {
+  font-size: 40px;
+  margin-bottom: 8px;
+}
+
+/* Couleurs personnalisées des icônes */
+.red i {
+  color: #e74c3c;
+}
+
+.blue i {
+  color: #3498db;
+}
+
+.green i {
+  color: #2ecc71;
+}
+
+.orange i {
+  color: #f39c12;
+}
+
+/* Liste déroulante des leçons */
+.lecon-list {
+  display: none;
+  position: absolute;
+  top: 20%;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: rgba(255, 255, 255, 0.8);
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+}
+
+select {
+  font-size: 18px;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  outline: none;
+}
+
+select:focus {
+  border-color: #3498db;
+}
+
+/* Texte central */
+.center-text {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.center-text h1 {
+  background-color: rgba(0, 0, 0, 0.5);
+  padding: 20px;
+  border-radius: 15px;
+}
+
+/* Texte en bas */
+.bottom-text {
+  padding-bottom: 30px;
+  font-size: 20px;
+  background-color: rgba(0, 0, 0, 0.3);
+  animation: fadeUp 2s ease-out;
+  font-weight: bold;
+  font-size: 22px;
+  color: #fff;
+}
+
+@keyframes fadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Modale des leçons */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  overflow: auto;
+  padding-top: 60px;
+}
+
+.modal-content {
+  background-color: #fefefe;
+  margin: 5% auto;
+  padding: 20px;
+  border: 1px solid #888;
+  width: 80%;
+  border-radius: 10px;
+  max-width: 600px;
+  text-align: center;
+}
+
+.close {
+  color: #aaa;
+  font-size: 28px;
+  font-weight: bold;
+  position: absolute;
+  top: 10px;
+  right: 25px;
+}
+
+.close:hover,
+.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Couleurs pour chaque leçon */
+.lecon-content {
+  background-color: #f0f0f0;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.lecon-1 {
+  background-color: #f39c12;
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.lecon-2 {
+  background-color: #2ecc71;
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.lecon-3 {
+  background-color: #3498db;
+  color: white;
+  padding: 20px;
+  border-radius: 10px;
+}
