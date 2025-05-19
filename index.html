@@ -5,31 +5,39 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Page d'accueil</title>
   <link rel="stylesheet" href="style.css"/>
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
 <body>
   <div class="background-container">
-    <!-- Icônes du menu -->
     <div class="menu-icons">
       <div class="icon-box red" onclick="toggleLeconList()">
         <i class="fas fa-book"></i>
         <span>Mes leçons</span>
       </div>
-      <div class="icon-box blue">
+      <div class="icon-box blue" onclick="toggleActiviteList()">
         <i class="fas fa-pencil-alt"></i>
         <span>Mes activités</span>
       </div>
-      <div class="icon-box green">
+      <div class="icon-box green" onclick="openHistoire()">
         <i class="fas fa-gamepad"></i>
         <span>Histoire et jeux</span>
       </div>
-      <div class="icon-box orange">
-        <i class="fas fa-envelope"></i>
-        <span>Contact</span>
+      <div class="icon-box orange" onclick="openLoginModal()">
+        <i class="fas fa-user"></i>
+        <span>Se connecter</span>
       </div>
     </div>
 
-    <!-- Liste déroulante des leçons -->
+    <div class="center-text">
+      <h1>L'école à la maison, c'est facile et amusant</h1>
+    </div>
+
+    <div class="bottom-text">
+      <p>Avec maîtresse Samira</p>
+      <div id="welcomeUser" style="text-align:center; margin-top: 10px; font-weight: bold;"></div>
+
+    </div>
+
     <div id="leconList" class="lecon-list">
       <select onchange="openLecon(this.value)">
         <option value="">Choisir une leçon</option>
@@ -39,18 +47,17 @@
       </select>
     </div>
 
-    <!-- Texte central -->
-    <div class="center-text">
-      <h1>L'école à la maison, c'est facile et amusant</h1>
-    </div>
-
-    <!-- Texte en bas -->
-    <div class="bottom-text">
-      <p>Avec maîtresse Samira</p>
+    <div id="activiteList" class="activite-list">
+      <select onchange="openActivite(this.value)">
+        <option value="">Choisir une activité</option>
+        <option value="1">QCM : La phrase verbale et nominale</option>
+        <option value="2">QCM : Les COD et COI</option>
+        <option value="3">QCM : L'accord sujet-verbe</option>
+      </select>
     </div>
   </div>
 
-  <!-- Fenêtre modale des leçons -->
+  <!-- Modales pour Leçons et Activités -->
   <div id="leconsModal" class="modal">
     <div class="modal-content">
       <span class="close" onclick="closeLecons()">&times;</span>
@@ -58,6 +65,84 @@
     </div>
   </div>
 
+  <div id="activitesModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeActivites()">&times;</span>
+      <div id="activite-content" class="activite-content"></div>
+    </div>
+  </div>
+
+  <!-- Modale Connexion -->
+  <div id="loginModal" class="modal" style="display:none;">
+    <div class="modal-content" style="max-width: 300px; text-align: center;">
+      <span class="close" onclick="closeLoginModal()">&times;</span>
+      <h3>Connexion</h3>
+      <label for="role">Choisissez votre rôle:</label>
+      <select id="role" style="width: 90%; padding: 8px; margin: 10px 0;">
+        <option value="eleve">Élève</option>
+        <option value="enseignant">Enseignant</option>
+      </select>
+      <input type="text" id="username" placeholder="Nom d'utilisateur" style="width: 90%; padding: 8px; margin: 10px 0;"/>
+      <input type="password" id="password" placeholder="Mot de passe" style="width: 90%; padding: 8px; margin-bottom: 10px;"/>
+      <button onclick="login()" style="padding: 8px 20px;">Se connecter</button>
+      <p id="loginError" style="color:red;"></p>
+    </div>
+  </div>
+
+  <audio id="success-audio" src="sons/applaudissement.wav" preload="auto"></audio>
+  <canvas id="confetti-canvas" style="position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:9999;"></canvas>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
   <script src="script.js"></script>
+
+  <script>
+    const users = {
+      eleve: [
+        { username: "Anouar", password: "1234" },
+        { username: "Sanae", password: "abcd" },
+        { username: "Mahdi", password: "samira" },
+        { username: "Salma", password: "2024" }
+      ],
+      enseignant: [
+        { username: "samira", password: "admin123" },
+        { username: "Allal", password: "teach456" }
+      ]
+    };
+
+    function openLoginModal() {
+      document.getElementById("loginModal").style.display = "block";
+      document.getElementById("loginError").textContent = "";
+    }
+
+    function closeLoginModal() {
+      document.getElementById("loginModal").style.display = "none";
+    }
+
+    function login() {
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const role = document.getElementById("role").value;
+      const user = users[role].find(u => u.username === username && u.password === password);
+
+      if (user) {
+        // Connexion réussie
+        document.getElementById("welcomeUser").textContent = "Bienvenue, " + username + " (" + role + ")!";
+        closeLoginModal();
+        
+        // Redirection selon le rôle
+        if (role === "eleve") {
+  localStorage.setItem("nomUtilisateur", username); 
+  window.location.href = "evaluation.html";
+}
+
+if (role === "enseignant") {
+  window.location.href = "resultats.html";
+}
+
+      } else {
+        document.getElementById("loginError").textContent = "Identifiants incorrects.";
+      }
+    }
+  </script>
 </body>
 </html>
