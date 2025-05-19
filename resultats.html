@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Résultats des élèves</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: url("resultats.png") no-repeat center center fixed;
+      background-size: cover;
+      color: #333;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1, .filters, .clear-button {
+      text-align: center;
+      margin-top: 30px;
+      color: #fff;
+      text-shadow: 1px 1px 2px black;
+    }
+
+    .logout-btn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      background-color: #007bff;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+      box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.3);
+    }
+
+    .logout-btn:hover {
+      background-color: #0056b3;
+    }
+
+    table {
+      width: 90%;
+      margin: 20px auto;
+      border-collapse: collapse;
+      background-color: rgba(255, 255, 255, 0.95);
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    }
+
+    th, td {
+      padding: 12px;
+      border: 1px solid #ccc;
+      text-align: center;
+      font-size: 16px;
+    }
+
+    th {
+      background-color: #e0e0e0;
+    }
+
+    select {
+      padding: 8px;
+      margin: 0 10px;
+      font-size: 16px;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      border: none;
+      background-color: #dc3545;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+      margin-top: 20px;
+    }
+
+    button:hover {
+      background-color: #c82333;
+    }
+  </style>
+</head>
+<body>
+  <button class="logout-btn" onclick="window.location.href='index.html'">🔒 Se déconnecter</button>
+
+  <h1>Résultats des élèves</h1>
+
+  <div class="filters">
+    <label for="filtreNom">Filtrer par élève :</label>
+    <select id="filtreNom" onchange="filtrer()">
+      <option value="">Tous</option>
+    </select>
+
+    <label for="filtreActivite">Filtrer par activité :</label>
+    <select id="filtreActivite" onchange="filtrer()">
+      <option value="">Toutes</option>
+    </select>
+  </div>
+
+  <div class="clear-button">
+    <button onclick="viderResultats()">🗑️ Vider les résultats</button>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Nom d'élève</th>
+        <th>Activité</th>
+        <th>Score</th>
+        <th>Date</th>
+      </tr>
+    </thead>
+    <tbody id="resultatsBody">
+      <!-- Résultats dynamiques -->
+    </tbody>
+  </table>
+
+  <script>
+    const resultats = JSON.parse(localStorage.getItem("resultats")) || [];
+
+    const filtreNom = document.getElementById("filtreNom");
+    const filtreActivite = document.getElementById("filtreActivite");
+    const tbody = document.getElementById("resultatsBody");
+
+    function remplirFiltres() {
+      const noms = [...new Set(resultats.map(r => r.nom))];
+      const activites = [...new Set(resultats.map(r => r.activite))];
+
+      noms.forEach(n => {
+        const opt = document.createElement("option");
+        opt.value = n;
+        opt.textContent = n;
+        filtreNom.appendChild(opt);
+      });
+
+      activites.forEach(a => {
+        const opt = document.createElement("option");
+        opt.value = a;
+        opt.textContent = a;
+        filtreActivite.appendChild(opt);
+      });
+    }
+
+    function afficherResultats(filtreNomVal = "", filtreActiviteVal = "") {
+      tbody.innerHTML = "";
+      resultats
+        .filter(r =>
+          (filtreNomVal === "" || r.nom === filtreNomVal) &&
+          (filtreActiviteVal === "" || r.activite === filtreActiviteVal)
+        )
+        .forEach(r => {
+          const row = `<tr>
+            <td>${r.nom}</td>
+            <td>${r.activite}</td>
+            <td>${r.score} ${getIcon(r.score)}</td>
+            <td>${new Date(r.date).toLocaleDateString()}</td>
+          </tr>`;
+          tbody.innerHTML += row;
+        });
+    }
+
+    function getIcon(scoreStr) {
+      const [obt, total] = scoreStr.split('/').map(Number);
+      const pourcentage = (obt / total) * 100;
+      return pourcentage >= 80
+        ? '<span style="color: green; font-size: 20px;">✔️</span>'
+        : '<span style="color: red; font-size: 20px;">❌</span>';
+    }
+
+    function filtrer() {
+      const nom = filtreNom.value;
+      const activite = filtreActivite.value;
+      afficherResultats(nom, activite);
+    }
+
+    function viderResultats() {
+      if (confirm("Êtes-vous sûr de vouloir supprimer tous les résultats ? Cette action est définitive.")) {
+        localStorage.removeItem("resultats");
+        location.reload();
+      }
+    }
+
+    // Initialisation
+    remplirFiltres();
+    afficherResultats();
+  </script>
+</body>
+</html>
