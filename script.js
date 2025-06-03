@@ -9,124 +9,91 @@ function toggleActiviteList() {
   activiteList.style.display = activiteList.style.display === 'block' ? 'none' : 'block';
   document.getElementById('leconList').style.display = 'none';
 }
-
 function openLecon(leconNumber) {
-  document.getElementById('leconsModal').style.display = 'block';
+  const modal = document.getElementById('leconsModal');
+  const leconContent = document.getElementById('lecon-content');
+
   const content = {
     "1": `
-      <div class="lesson-content" style="font-family: 'Segoe UI', sans-serif; font-size: 18px; color: #2c3e50; line-height: 1.6;">
-        <h2 style="color:#ffffff; background:#2ecc71; padding:15px; border-radius:10px; text-align:center;">Leçon : La phrase verbale et la phrase nominale</h2>
-        <div style="border: 2px solid #2ecc71; border-radius: 12px; padding: 20px; background-color: #ecf9f1;">
-          <p><strong style="color:#e67e22;">Définition :</strong></p>
-          <ul style="list-style-type: disc; margin-left: 20px;">
-            <li><span style="color:#27ae60; font-weight:bold;">Une phrase verbale</span> est une phrase qui contient un ou plusieurs verbes conjugués.</li>
-            <li><span style="color:#2980b9; font-weight:bold;">Une phrase nominale</span> est une phrase qui ne contient aucun verbe conjugué.</li>
-          </ul>
-          <p><strong style="color:#e67e22;">Exemples :</strong></p>
-          <div style="margin-top:10px;">
-            <p style="background-color:#ecf0f1; padding:12px; border-left:5px solid #27ae60; border-radius:6px;">✅ Phrase verbale : <em style="color:#16a085;">Mon frère mange une pomme.</em></p>
-            <p style="background-color:#ecf0f1; padding:12px; border-left:5px solid #2980b9; border-radius:6px;">✅ Phrase nominale : <em style="color:#8e44ad;">Quelle belle journée !</em></p>
-          </div>
-          <p><strong style="color:#e67e22;">Remarques :</strong></p>
-          <ul style="list-style-type: disc; margin-left: 20px;">
-            <li>📌 La phrase verbale est la forme la plus utilisée dans la langue française.</li>
-            <li>💬 La phrase nominale est souvent utilisée à l’oral, dans les titres, les slogans, ou les interjections.</li>
-          </ul>
-        </div>
+      <div style="text-align:center;">
+        <h2 style="
+          font-size: 26px;
+          color: #ffffff; 
+          background-color: #e67e22; 
+          padding: 15px; 
+          border-radius: 15px;
+          font-family: 'Comic Sans MS', cursive, sans-serif;
+          box-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+          margin-bottom: 15px;
+        ">
+          🎈 Vidéo : Phrase nominale et verbale
+        </h2>
+        <video width="100%" height="315" controls style="border-radius:12px;">
+          <source src="nominale.mp4" type="video/mp4">
+          Votre navigateur ne prend pas en charge la vidéo.
+        </video>
       </div>
     `,
     "2": `
-      <div class="lesson-content" style="font-family: 'Segoe UI', sans-serif; font-size: 18px; color: #2c3e50; line-height: 1.6;">
-        <h2 style="color:#ffffff; background:#e67e22; padding:15px; border-radius:10px; text-align:center;">Leçon : COD et COI</h2>
-        <div style="border: 2px solid #e67e22; border-radius: 12px; padding: 20px; background-color: #fff9f0;">
-          <h3 style="color:#c0392b;">I) Le Complément d'Objet Direct (COD)</h3>
-          <p>Le complément d'objet direct (COD) est le mot ou le groupe de mots qui se joint au verbe <strong>sans préposition</strong> pour en compléter le sens.</p>
-          <p>C'est un complément du verbe. Il représente l'être ou la chose qui reçoit directement l'action que fait le sujet.</p>
-          <ul style="list-style-type: none; padding-left: 0;">
-            <li>🔹 Je conduis <strong style="color:#c0392b;">la voiture</strong>.</li>
-            <li>🔹 Maman fait <strong style="color:#c0392b;">les gâteaux</strong>.</li>
-          </ul>
-          <p><strong>Pour reconnaître le COD</strong>, on pose la question <em>"qui ?"</em> ou <em>"quoi ?"</em> après le verbe :</p>
-          <ul style="list-style-type: none; padding-left: 0;">
-            <li>➡️ Je conduis <em>quoi</em> ? → <strong style="color:#c0392b;">La voiture</strong> = COD</li>
-            <li>➡️ Maman fait <em>quoi</em> ? → <strong style="color:#c0392b;">Les gâteaux</strong> = COD</li>
-          </ul>
-
-          <h3 style="color:#2980b9; margin-top:30px;">II) Le Complément d'Objet Indirect (COI)</h3>
-          <p>Le complément d'objet indirect (COI) est un mot ou un groupe de mots qui se joint au verbe <strong>par l'intermédiaire d'une préposition</strong> pour en compléter le sens.</p>
-          <p>C'est un complément du verbe. Il représente l'être ou la chose qui reçoit indirectement l'action que fait le sujet.</p>
-          <ul style="list-style-type: none; padding-left: 0;">
-            <li>🔹 Pascal parle <strong style="color:#2980b9;">à son frère</strong>.</li>
-            <li>🔹 Sébastien se souvient <strong style="color:#2980b9;">de sa leçon</strong>.</li>
-          </ul>
-          <p><strong>Pour reconnaître le COI</strong>, on pose les questions :</p>
-          <ul>
-            <li>À qui ? / À quoi ?</li>
-            <li>De qui ? / De quoi ?</li>
-            <li>Pour qui ? / Pour quoi ?</li>
-            <li>Contre qui ? / Contre quoi ?</li>
-          </ul>
-          <ul style="list-style-type: none; padding-left: 0;">
-            <li>➡️ À qui parle Pascal ? → <strong style="color:#2980b9;">à son frère</strong> = COI</li>
-            <li>➡️ De quoi se souvient Sébastien ? → <strong style="color:#2980b9;">de sa leçon</strong> = COI</li>
-          </ul>
-        </div>
+      <div style="text-align:center;">
+        <h2 style="
+          font-size: 26px;
+          color: #ffffff; 
+          background-color: #e67e22; 
+          padding: 15px; 
+          border-radius: 15px;
+          font-family: 'Comic Sans MS', cursive, sans-serif;
+          box-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+          margin-bottom: 15px;
+        ">
+          🧩 Vidéo : COD et COI
+        </h2>
+        <video width="100%" height="315" controls style="border-radius:12px;">
+          <source src="cod.mp4" type="video/mp4">
+          Votre navigateur ne prend pas en charge la vidéo.
+        </video>
       </div>
     `,
     "3": `
-      <div class="lesson-content" style="font-family: 'Segoe UI', sans-serif; font-size: 18px; color: #2c3e50; line-height: 1.6;">
-        <h2 style="color:#ffffff; background:#8e44ad; padding:15px; border-radius:10px; text-align:center;">Leçon : L'accord sujet-verbe</h2>
-        <div style="border: 2px solid #8e44ad; border-radius: 12px; padding: 20px; background-color: #f8f0ff;">
-          <p><strong>Le verbe s'accorde toujours avec son sujet, quelle que soit la position de celui-ci dans la phrase.</strong></p>
-          <p style="background:#ecf0f1; border-left: 4px solid #27ae60; padding:10px;">👉 Les enfants <strong style="color:#27ae60;">mangent</strong> le gâteau au chocolat.<br><em>→ Le verbe "manger" s'accorde avec le sujet "les enfants".</em></p>
-          <p style="background:#ecf0f1; border-left: 4px solid #27ae60; padding:10px;">👉 Le gâteau que tu as fait <strong style="color:#27ae60;">est</strong> très bon.<br><em>→ Le verbe "être" s'accorde avec le sujet "le gâteau".</em></p>
-
-          <p>Il faut savoir reconnaître le sujet et le verbe pour accorder correctement.</p>
-          <p><strong>Pour trouver le sujet :</strong> posez la question <em>"qu'est-ce qui ?"</em> ou <em>"qui ?"</em> après le verbe.</p>
-          <p style="background:#ecf0f1; border-left: 4px solid #3498db; padding:10px;">👉 QUI prend un bain ? → <strong style="color:#3498db;">Les enfants</strong>.</p>
-
-          <p><strong>Un même sujet peut avoir plusieurs verbes :</strong></p>
-          <p style="background:#ecf0f1; border-left: 4px solid #9b59b6; padding:10px;">👉 Cet enfant <strong style="color:#9b59b6;">crie, pleure et fait</strong> des caprices.</p>
-          <p style="background:#ecf0f1; border-left: 4px solid #9b59b6; padding:10px;">👉 Ces enfants <strong style="color:#9b59b6;">crient, pleurent et font</strong> des caprices.</p>
-
-          <p><strong>Un verbe peut avoir plusieurs sujets, on l'accordera au pluriel :</strong></p>
-          <p style="background:#ecf0f1; border-left: 4px solid #e67e22; padding:10px;">👉 Le professeur et le directeur <strong style="color:#e67e22;">sont</strong> en réunion.</p>
-
-          <p><strong>Dans une phrase interrogative :</strong> le sujet est placé après le verbe (sujet inversé).</p>
-          <p>Les règles d'accord sont les mêmes.</p>
-
-          <p style="background:#ecf0f1; border-left: 4px solid #34495e; padding:10px;"><strong>N.B. :</strong> Il faut mettre un trait d'union entre le verbe et le sujet. Ne pas oublier le <em>"t euphonique"</em> pour la liaison :</p>
-          <ul style="list-style-type: none; padding-left: 0;">
-            <li>🔹 Sans consonne euphonique : <em>D'où viens-tu ?</em></li>
-            <li>🔹 Avec <strong>t euphonique</strong> : <em>Où va-t-elle ?</em></li>
-          </ul>
-        </div>
+      <div style="text-align:center;">
+        <h2 style="
+          font-size: 26px;
+          color: #ffffff; 
+          background-color: #8e44ad; 
+          padding: 15px; 
+          border-radius: 15px;
+          font-family: 'Comic Sans MS', cursive, sans-serif;
+          box-shadow: 2px 2px 8px rgba(0,0,0,0.3);
+          margin-bottom: 15px;
+        ">
+          ✏️ Vidéo : Accord du verbe avec le sujet
+        </h2>
+        <video width="100%" height="315" controls style="border-radius:12px;">
+          <source src="accord.mp4" type="video/mp4">
+          Votre navigateur ne prend pas en charge la vidéo.
+        </video>
       </div>
     `
   };
-  document.getElementById('lecon-content').innerHTML = content[leconNumber] || "";
-}
 
-function closeLecons() {
-  document.getElementById('leconsModal').style.display = 'none';
-}
-
-function openHistoire() {
-  const content = `
-    <div style="font-family: 'Comic Sans MS', cursive; font-size: 18px; line-height: 1.6; color: #2d3436; padding: 20px; background: linear-gradient(135deg, #fceabb, #f8b500); border-radius: 15px; box-shadow: 0 0 10px rgba(0,0,0,0.2);">
-      <h2 style="text-align:center; color: #d63031; background-color:#ffeaa7; padding:10px; border-radius:8px;">📘 Histoires pour enfants</h2>
-      <div style="display:flex; justify-content:center; gap:15px; margin-bottom:20px;">
-        <button onclick="afficherHistoire(1)">Histoire 1</button>
-        <button onclick="afficherHistoire(2)">Histoire 2</button>
-        <button onclick="afficherHistoire(3)">Histoire 3</button>
-        <button onclick="afficherHistoire(4)">Histoire 4</button>
-      </div>
-      <div id="contenu-histoire" style="opacity: 0; transition: opacity 0.6s ease; background-color: #fffde7; padding: 15px; border-radius: 10px; box-shadow: inset 0 0 10px rgba(0,0,0,0.1);"></div>
+  leconContent.innerHTML = `
+    <div class="lecon-box" style="position: relative;">
+      <span onclick="closeLecon()" style="position:absolute; top:10px; right:15px; font-size:24px; cursor:pointer; color:#e74c3c;">&times;</span>
+      ${content[leconNumber] || ""}
     </div>
   `;
-  document.getElementById('leconsModal').style.display = 'block';
-  document.getElementById('lecon-content').innerHTML = content;
+
+  modal.style.display = 'block';
 }
+
+function closeLecon() {
+  const modal = document.getElementById('leconsModal');
+  const leconContent = document.getElementById('lecon-content');
+  leconContent.innerHTML = "";
+  modal.style.display = 'none';
+}
+
+
 
 function afficherHistoire(num) {
   let histoire = "";
@@ -170,6 +137,11 @@ function afficherHistoire(num) {
       <p style="text-align:center; font-weight:bold; color:#d63031;">Moralité : Même les plus petits peuvent être d'une grande aide.</p>
     `;
   }
+  function closeLecon() {
+  const leconContent = document.getElementById("leconContent");
+  leconContent.innerHTML = "";
+  leconContent.style.display = "none";
+}
 
   const conteneur = document.getElementById('contenu-histoire');
   conteneur.style.opacity = 0;
