@@ -1,12 +1,19 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+  <link href="https://fonts.googleapis.com/css2?family=Baloo+2&display=swap" rel="stylesheet">
+
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Page d'accueil</title>
   <link rel="stylesheet" href="style.css"/>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 </head>
+<div class="mascotte-container">
+  <img src="hibou.png" alt="Mascotte Hibou" class="mascotte-img" />
+  <div class="bulle-dialogue">Bienvenue sur le site de maîtresse Samira ! 🌟</div>
+</div>
+
 <body>
   <div class="background-container">
     <div class="menu-icons">
@@ -37,7 +44,7 @@
       <div id="welcomeUser" style="text-align:center; margin-top: 10px; font-weight: bold;"></div>
 
     </div>
-
+    
     <div id="leconList" class="lecon-list">
       <select onchange="openLecon(this.value)">
         <option value="">Choisir une leçon</option>
@@ -78,9 +85,12 @@
       <span class="close" onclick="closeLoginModal()">&times;</span>
       <h3>Connexion</h3>
       <label for="role">Choisissez votre rôle:</label>
-      <select id="role" style="width: 90%; padding: 8px; margin: 10px 0;">
-        <option value="eleve">Élève</option>
-        <option value="enseignant">Enseignant</option>
+      <div class="login-role">
+        <button type="button" class="role-button eleve" onclick="selectRole('eleve')">👧 Élève</button>
+        <button type="button" class="role-button enseignant" onclick="selectRole('enseignant')">👩‍🏫 Enseignant</button>
+        <input type="hidden" id="roleInput" name="role">
+      </div>
+      
       </select>
       <input type="text" id="username" placeholder="Nom d'utilisateur" style="width: 90%; padding: 8px; margin: 10px 0;"/>
       <input type="password" id="password" placeholder="Mot de passe" style="width: 90%; padding: 8px; margin-bottom: 10px;"/>
@@ -96,6 +106,17 @@
   <script src="script.js"></script>
 
   <script>
+    let selectedRole = null;
+    function selectRole(role) {
+  selectedRole = role;
+  document.getElementById("roleInput").value = role;
+
+  // Ajouter un style visuel au bouton sélectionné
+  document.querySelectorAll('.role-button').forEach(btn => btn.classList.remove('selected'));
+  document.querySelector(`.role-button.${role}`).classList.add('selected');
+}
+
+
     const users = {
       eleve: [
         { username: "Anouar", password: "1234" },
@@ -121,7 +142,7 @@
     function login() {
       const username = document.getElementById("username").value.trim();
       const password = document.getElementById("password").value.trim();
-      const role = document.getElementById("role").value;
+      const role = document.getElementById("roleInput").value;
       const user = users[role].find(u => u.username === username && u.password === password);
 
       if (user) {
@@ -144,5 +165,61 @@ if (role === "enseignant") {
       }
     }
   </script>
+  <!-- Modale Histoires -->
+<div id="histoireModal" class="modal" style="display:none; justify-content:center; align-items:center; position:fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.6); z-index:1000;">
+      <div style="
+          background: linear-gradient(145deg, #f9f9ff, #e6f0ff);
+          padding: 25px 30px;
+          border-radius: 15px;
+          max-width: 700px;
+          max-height: 80vh;
+          overflow-y: auto;
+          position: relative;
+          box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+          border: 2px solid #90c2f0;
+          font-family: 'Comic Sans MS', 'Arial Rounded MT Bold', sans-serif;
+          color: #204080;
+          font-size: 18px;
+          line-height: 1.6;
+        ">
+        <span onclick="closeHistoireModal()" style="
+          position: absolute;
+          top: 10px;
+          right: 15px;
+          cursor: pointer;
+          font-size: 28px;
+          font-weight: bold;
+          color: #333;
+          transition: color 0.3s ease;
+        " onmouseover="this.style.color='#e74c3c'" onmouseout="this.style.color='#333'">&times;</span>
+    
+        <h2 style="text-align:center; margin-bottom: 15px;">Choisis une histoire à lire :</h2>
+    
+        <div style="text-align:center; margin-bottom: 20px;">
+          <button class="btn-histoire" onclick="afficherHistoire(1)">Histoire 1</button>
+          <button class="btn-histoire" onclick="afficherHistoire(2)">Histoire 2</button>
+          <button class="btn-histoire" onclick="afficherHistoire(3)">Histoire 3</button>
+        </div>
+    
+        <div id="contenu-histoire" style="
+  min-height: 150px;
+  border: 2px solid #357ABD;
+  border-radius: 12px;
+  background: #e9f0ff;
+  padding: 20px;
+  box-shadow: 0 4px 10px rgba(53, 122, 189, 0.3);
+  opacity: 0;
+  transition: opacity 0.6s ease-in-out;
+">
+  <!-- vide par défaut -->
+</div>
+
+        </div>
+      </div>
+    </div>
+    
+        
+    
+
 </body>
 </html>
