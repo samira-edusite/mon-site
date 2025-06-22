@@ -93,14 +93,9 @@ function closeLecon() {
   modal.style.display = 'none';
 }
 
-
-
-function afficherHistoire(num) {
-  let histoire = "";
-
-  if (num === 1) {
-    histoire = `
-      <h3 style="color: #6c5ce7; background-color:#dfe6e9; padding: 10px; border-radius: 8px;">🐭 Lili la petite souris et le trésor du grenier</h3>
+// Objet global histoires
+const histoires = {
+  1: `<h3 <h3 style="color: #6c5ce7; background-color:#dfe6e9; padding: 10px; border-radius: 8px;">🐭 Lili la petite souris et le trésor du grenier</h3>
       <p><span style="color:#00b894;">Il était une fois</span>, dans une vieille maison en bois, une petite souris grise appelée <strong style="color:#6c5ce7;">Lili</strong>.</p>
       <p><strong style="color:#e67e22;">Lili</strong> habitait dans un petit trou douillet au fond d’un <span style="color:#fd79a8;">grenier</span> rempli de vieilles boîtes et de secrets oubliés.</p>
       <p>Chaque matin, Lili partait à la recherche de <span style="color:#fab1a0;">miettes de pain</span> ou d’un bout de <strong style="color:#f1c40f;">fromage</strong>. Elle était <strong style="color:#0984e3;">maline</strong>, <strong style="color:#d35400;">rapide</strong>, et surtout très <strong style="color:#00cec9;">curieuse</strong>.</p>
@@ -111,45 +106,56 @@ function afficherHistoire(num) {
       <p style="background-color:#fab1a0; padding:10px; border-left:5px solid #d63031; border-radius: 5px;">Vite, Lili referma la boîte, prit un petit bout de fromage et fila dans son trou !</p>
       <p>Depuis ce jour, Lili gardait le secret du trésor du grenier, et chaque nuit, elle en grignotait un tout petit morceau. 🧀✨</p>
       <p style="text-align:center; font-size:20px; color:#6c5ce7;"><strong>🎉 Fin 🎉</strong></p>
-    `;
-  } else if (num === 2) {
-    histoire = `
-      <h3 style="color: #00cec9; background-color:#dfe6e9; padding: 10px; border-radius: 8px;">🦊 Le renard et le corbeau</h3>
+    `,
+
+  2: ` <h3 style="color: #00cec9; background-color:#dfe6e9; padding: 10px; border-radius: 8px;">🦊 Le renard et le corbeau</h3>
       <p>Un <strong style="color:#d35400;">renard malin</strong> vit un <strong style="color:#2d3436;">corbeau</strong> perché sur un arbre, tenant un <span style="color:#f1c40f;">fromage</span>.</p>
       <p>Le renard dit : <em>"Que tu es beau ! Si ta voix est aussi belle, tu es le roi des oiseaux !"</em></p>
       <p>Flatté, le corbeau ouvrit le bec pour chanter... et le <strong style="color:#f39c12;">fromage tomba</strong> !</p>
       <p>Le renard le prit et s’éloigna en disant : <em>"Apprenez que tout flatteur vit aux dépens de celui qui l’écoute."</em></p>
       <p style="text-align:center; font-weight:bold; color:#e67e22;">🐾 Fin 🐾</p>
-    `;
-  } else if (num === 3) {
-    histoire = `
-      <h3 style="color: #e17055; background-color:#dfe6e9; padding: 10px; border-radius: 8px;">🐢 La tortue et le lièvre</h3>
+    `,
+  3: `<h3 style="color: #e17055; background-color:#dfe6e9; padding: 10px; border-radius: 8px;">🐢 La tortue et le lièvre</h3>
       <p>Le <strong style="color:#d63031;">lièvre</strong>, rapide et moqueur, riait de la lente <strong style="color:#27ae60;">tortue</strong>.</p>
       <p>Ils décidèrent de faire une course. Le lièvre courut vite… mais fit une sieste !</p>
       <p>La tortue, <strong style="color:#3498db;">patiente et constante</strong>, avança doucement… et gagna !</p>
       <p style="text-align:center; font-weight:bold; color:#8e44ad;">🎉 Moralité : Rien ne sert de courir, il faut partir à point.</p>
-    `;
-  } else if (num === 4) {
-    histoire = `
-      <h3 style="color: #0984e3; background-color:#dfe6e9; padding: 10px; border-radius: 8px;">🦁 Le lion et la souris</h3>
-      <p>Un <strong style="color:#e84393;">lion</strong> attrapa une petite <strong style="color:#2ecc71;">souris</strong> mais la laissa partir.</p>
-      <p>Plus tard, le lion fut pris dans un filet. La souris arriva, rongea les cordes et le libéra.</p>
-      <p style="text-align:center; font-weight:bold; color:#d63031;">Moralité : Même les plus petits peuvent être d'une grande aide.</p>
-    `;
-  }
-  function closeLecon() {
-  const leconContent = document.getElementById("leconContent");
-  leconContent.innerHTML = "";
-  leconContent.style.display = "none";
-}
+    `,
+};
 
-  const conteneur = document.getElementById('contenu-histoire');
-  conteneur.style.opacity = 0;
+// Ouvrir la modale histoire
+function openHistoire() {
+  document.getElementById('histoireModal').style.display = 'flex';
+  // Cacher autres listes si besoin
+  document.getElementById("leconList").style.display = "none";
+  document.getElementById("activiteList").style.display = "none";
+
+  // Remettre le texte initial transparent
+  const contenu = document.getElementById('contenu-histoire');
+  contenu.style.opacity = 0;
   setTimeout(() => {
-    conteneur.innerHTML = histoire;
-    conteneur.style.opacity = 1;
+    contenu.innerHTML = 'Veuillez sélectionner une histoire pour la lire.';
+    contenu.style.opacity = 1;
   }, 300);
 }
+
+// Afficher histoire sélectionnée avec transition
+function afficherHistoire(num) {
+  const contenu = document.getElementById('contenu-histoire');
+  contenu.style.opacity = 0;
+  setTimeout(() => {
+    contenu.innerHTML = histoires[num] || '<p>Histoire non trouvée.</p>';
+    contenu.style.opacity = 1;
+  }, 300);
+}
+
+// Fermer la modale histoire
+function closeHistoireModal() {
+  document.getElementById('histoireModal').style.display = 'none';
+}
+
+
+
 
 function openActivite(activiteNumber) {
   document.getElementById('activitesModal').style.display = 'block';
@@ -296,32 +302,6 @@ function goToResultats() {
   window.location.href = "resultats.html";
 }
 
-function login() {
-  const username = document.getElementById("username").value.trim();
-  const password = document.getElementById("password").value.trim();
-  const role = document.getElementById("role").value;
-  const user = users[role].find(u => u.username === username && u.password === password);
-
-  if (user) {
-    document.getElementById("welcomeUser").textContent = "Bienvenue, " + username + " (" + role + ")!";
-    closeLoginModal();
-
-    // Rediriger l'élève vers la page d'évaluation
-    if (role === "eleve") {
-      window.location.href = "evaluation.html"; // Assurez-vous que ce fichier existe
-    }
-
-    // Rediriger l'enseignant vers la page des résultats des élèves
-    if (role === "enseignant") {
-      window.location.href = "resultats.html"; // Assurez-vous que ce fichier existe
-    }
-
-  } else {
-    document.getElementById("loginError").textContent = "Identifiants incorrects.";
-  }
-}
-
-
 
 function checkQCM(formId) {
   const form = document.getElementById(formId);
@@ -376,4 +356,87 @@ function checkQCM(formId) {
 
   resultDiv.innerHTML = message;
   showConfettiIfPerfect(score, correct.length);
+  // ✅ Login modale : CORRIGÉE !
+  let selectedRole = null;
+
+function openLoginModal() {
+    document.getElementById("loginModal").style.display = "block";
+    document.getElementById("loginError").textContent = "";
+    document.getElementById("formulaireConnexion").style.display = "none";
+    selectedRole = null;
+    document.getElementById("titreRole").textContent = "";
+    document.getElementById("username").value = "";
+    document.getElementById("password").value = "";
+  }
+  
+  function closeLoginModal() {
+    document.getElementById("loginModal").style.display = "none";
+  }
+  
+  function selectRole(role) {
+    selectedRole = role;
+    document.getElementById('roleInput').value = role;
+  
+    // Ajouter un style visuel au bouton sélectionné
+    document.querySelectorAll('.role-button').forEach(btn => btn.classList.remove('selected'));
+    if (role === 'eleve') {
+      document.querySelector('.role-button.eleve').classList.add('selected');
+    } else if (role === 'enseignant') {
+      document.querySelector('.role-button.enseignant').classList.add('selected');
+    }
+  
+    document.getElementById('loginError').textContent = "";
+  }
+  
+  
+  const users = {
+    eleve: [
+      { username: "Anouar", password: "1234" },
+      { username: "Sanae", password: "abcd" },
+      { username: "Mahdi", password: "samira" },
+      { username: "Imane", password: "2024" }
+    ],
+    enseignant: [
+      { username: "samira", password: "admin123" },
+      { username: "Allal", password: "teach456" }
+    ]
+  };
+  
+  function login() {
+  const username = document.getElementById('username').value.trim();
+  const password = document.getElementById('password').value.trim();
+  const role = selectedRole;
+
+  if (!role) {
+    document.getElementById('loginError').textContent = "Veuillez choisir un rôle.";
+    return;
+  }
+
+  if (!username || !password) {
+    document.getElementById('loginError').textContent = "Veuillez remplir tous les champs.";
+    return;
+  }
+
+  const users = {
+    eleve: { "sami": "123", "aya": "456" },
+    enseignant: { "samira": "123", "ahmed": "456" }
+  };
+
+  if (!users[role][username] || users[role][username] !== password) {
+    document.getElementById('loginError').textContent = "Nom d'utilisateur ou mot de passe incorrect.";
+    return;
+  }
+
+  // Connexion réussie
+  document.getElementById('loginError').textContent = "";
+  document.getElementById('loginModal').style.display = "none";
+  document.getElementById('welcomeUser').textContent = `Bienvenue ${role === 'eleve' ? 'élève' : 'enseignant'} ${username} !`;
+
+  // Si tu veux rediriger :
+  // if (role === 'eleve') window.location.href = "evaluation.html";
+  // else window.location.href = "resultats.html";
+}
+
+
+  
 }
