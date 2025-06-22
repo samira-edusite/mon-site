@@ -5,6 +5,7 @@ body, html {
   height: 100%;
   font-family: 'Arial', sans-serif;
 }
+
 .background-image {
   position: fixed;
   top: 0;
@@ -16,33 +17,63 @@ body, html {
   z-index: -1;
   background-color: #000;
   filter: brightness(1.05) contrast(1.1) blur(3px);
-
-  pointer-events: none; /* évite de bloquer les clics sur les éléments devant */
-  user-select: none;    /* empêche la sélection de l’image */
-  filter: brightness(1.05) contrast(1.1); /* amélioration visuelle légère */
-  transition: opacity 1s ease-in-out; /* fondu doux si l'image change */
+  pointer-events: none;
+  user-select: none;
+  transition: opacity 1s ease-in-out;
+  animation: zoomSlow 30s ease-in-out infinite alternate;
 }
-@keyframes zoomSlow {
-  0% {
-    transform: scale(1);
-  }
-  100% {
-    transform: scale(1.05);
-  }
-}
-.icon-box {
-  width: 130px; /* largeur fixe harmonieuse */
-  aspect-ratio: 1 / 1.2; /* garde un ratio équilibré */
-  padding: 16px;
-  border-radius: 20px;
-  text-align: center;
-  background-color: rgba(0, 0, 0, 0.4);
-  transition: all 0.3s ease;
+.mascotte-container {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
   display: flex;
-  flex-direction: column;
-  justify-content: center;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.25);
+  align-items: flex-end;
+  z-index: 1000;
 }
+
+.mascotte-img {
+  width: 100px;
+  height: auto;
+  animation: saute 2s infinite;
+}
+
+@keyframes saute {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
+
+
+.bulle-dialogue {
+  background: #fff;
+  border: 2px solid #f3c623;
+  border-radius: 15px;
+  padding: 10px 15px;
+  margin-left: 10px;
+  font-size: 14px;
+  max-width: 200px;
+  box-shadow: 2px 2px 10px rgba(0,0,0,0.1);
+  position: relative;
+}
+
+.bulle-dialogue::before {
+  content: "";
+  position: absolute;
+  left: -10px;
+  bottom: 10px;
+  width: 0;
+  height: 0;
+  border-top: 10px solid transparent;
+  border-right: 10px solid #fff;
+  border-bottom: 10px solid transparent;
+}
+
+
+@keyframes zoomSlow {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.05); }
+}
+
+/* === ICONES === */
 .icon-box {
   width: 110px;
   aspect-ratio: 1 / 1.1;
@@ -55,42 +86,17 @@ body, html {
   flex-direction: column;
   justify-content: center;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-}
-
-.icon-box i {
-  font-size: 26px; /* taille réduite */
-  margin-bottom: 6px;
   color: white;
-  transition: transform 0.3s ease;
+  cursor: pointer;
+  font-size: 18px;
+  min-width: 120px;
 }
-
-
-.icon-box span {
-  font-size: 14px;
-  font-weight: 500;
-}
-
-.icon-box:hover {
-  transform: scale(1.1) translateY(-5px);
-  background-color: rgba(255, 255, 255, 0.1);
-}
-.icon-box.red i { color: #e74c3c; }
-.icon-box.blue i { color: #3498db; }
-.icon-box.green i { color: #2ecc71; }
-.icon-box.orange i { color: #f39c12; }
-
-
-.icon-box:hover i {
-  transform: scale(1.2);
-  color: #00cec9;
-}
-
 
 .icon-box i {
   font-size: 36px;
   margin-bottom: 10px;
   color: #fff;
-  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, color 0.3s ease;
 }
 
 .icon-box span {
@@ -98,13 +104,18 @@ body, html {
   font-weight: 600;
 }
 
-
-.background-image {
-  animation: zoomSlow 30s ease-in-out infinite alternate;
+.icon-box:hover {
+  transform: scale(1.1) translateY(-5px);
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #3498db;
 }
 
+.icon-box:hover i {
+  transform: scale(1.2);
+  color: #00cec9;
+}
 
-
+/* === CONTAINERS === */
 .background-container {
   background-image: url('mon_image.jpeg');
   background-size: cover;
@@ -125,32 +136,6 @@ body, html {
   gap: 30px;
   padding-top: 20px;
   flex-wrap: wrap;
-}
-
-.icon-box {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 12px 16px;
-  border-radius: 15px;
-  background-color: rgba(0, 0, 0, 0.5);
-  color: white;
-  cursor: pointer;
-  font-size: 18px;
-  transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
-  min-width: 120px;
-}
-
-.icon-box:hover {
-  transform: scale(1.1);
-  background-color: rgba(0, 0, 0, 0.7);
-  color: #3498db;
-}
-
-.icon-box i {
-  font-size: 40px;
-  margin-bottom: 8px;
 }
 
 /* === LISTES DÉROULANTES === */
@@ -184,7 +169,7 @@ select:focus {
 
 /* === TEXTE CENTRAL ET BAS === */
 .center-text {
-  flex-grow: 1;
+  font-family: 'Baloo 2', cursive, sans-serif;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -211,20 +196,23 @@ select:focus {
   100% { opacity: 1; transform: translateY(0); }
 }
 
-/* === MODALE === */
+/* === MODALE GÉNÉRALE === */
 .modal {
   display: none;
   position: fixed;
-  z-index: 1;
+  z-index: 1000;
   left: 0;
   top: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
-  overflow: auto;
-  padding-top: 60px;
+  background-color: rgba(0,0,0,0.5);
   justify-content: center;
   align-items: center;
+  overflow: auto;
+}
+
+.modal.show {
+  display: flex;
 }
 
 .modal-content {
@@ -233,8 +221,8 @@ select:focus {
   padding: 20px;
   border: 1px solid #888;
   width: 80%;
-  border-radius: 10px;
   max-width: 600px;
+  border-radius: 10px;
   text-align: center;
   max-height: 80%;
   overflow-y: auto;
@@ -259,14 +247,164 @@ select:focus {
   position: absolute;
   top: 10px;
   right: 25px;
+  cursor: pointer;
+  user-select: none;
+  transition: color 0.3s ease;
 }
 
 .close:hover,
 .close:focus {
   color: black;
   text-decoration: none;
-  cursor: pointer;
 }
+
+#loginModal .modal-content {
+  max-width: 340px;
+  padding: 30px 25px;
+  background: linear-gradient(135deg, #fceabb 0%, #f8b500 100%);
+  border-radius: 25px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+  font-family: 'Comic Sans MS', 'Segoe UI', cursive;
+  position: relative;
+  text-align: center;
+  animation: fadeIn 0.5s ease forwards;
+  transform: scale(1);
+  color: #4a2c2a;
+  border: 4px dashed #fff8dc;
+}
+
+#loginModal .close {
+  color: #ff4757; /* rouge doux visible */
+  background-color: #fff; /* cercle blanc */
+  border-radius: 50%;
+  padding: 4px 10px;
+  font-size: 26px;
+  font-weight: bold;
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  cursor: pointer;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  z-index: 10;
+}
+
+#loginModal .close:hover {
+  background-color: #ffeaa7;
+  color: #d63031;
+  transform: rotate(15deg) scale(1.1);
+}
+
+
+/* Titre */
+#loginModal h3 {
+  font-size: 26px;
+  margin-bottom: 20px;
+  font-weight: 800;
+  color: #2d3436;
+  text-shadow: 1px 1px 2px #fff;
+}
+
+/* Labels */
+#loginModal label {
+  font-weight: 600;
+  display: block;
+  margin-bottom: 6px;
+  color: #2d3436;
+  text-align: left;
+}
+
+/* Inputs & select */
+#loginModal select,
+#loginModal input[type="text"],
+#loginModal input[type="password"] {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 18px;
+  border: 2px solid #ffda79;
+  border-radius: 12px;
+  font-size: 16px;
+  background-color: #fffbea;
+  box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+#loginModal select:focus,
+#loginModal input:focus {
+  border-color: #f39c12;
+  outline: none;
+  box-shadow: 0 0 8px #ffeaa7;
+}
+
+/* Bouton connexion */
+#loginModal button {
+  width: 100%;
+  padding: 14px;
+  background-color: #ff7675;
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 5px 15px rgba(255, 118, 117, 0.5);
+  transition: all 0.3s ease;
+}
+
+#loginModal button:hover {
+  background-color: #e17055;
+  box-shadow: 0 7px 20px rgba(230, 112, 85, 0.8);
+}
+
+/* Message d'erreur */
+#loginError {
+  margin-top: 10px;
+  font-weight: bold;
+  color: #d63031;
+  background-color: #ffecec;
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 14px;
+}
+.login-role {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  margin-bottom: 20px;
+}
+
+.role-button {
+  padding: 12px 20px;
+  border-radius: 12px;
+  font-size: 18px;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+  background-color: #dfe6e9;
+  transition: transform 0.2s, background-color 0.3s;
+}
+
+.role-button.eleve {
+  background-color: #fab1a0;
+  color: #2d3436;
+}
+
+.role-button.enseignant {
+  background-color: #a29bfe;
+  color: #2d3436;
+}
+
+.role-button:hover {
+  transform: scale(1.05);
+}
+
+.role-button.selected {
+  background-color: #55efc4 !important;
+  color: #2d3436;
+  box-shadow: 0 0 0 3px #00cec9 inset;
+}
+
+
 
 /* === QCM === */
 .qcm-question {
@@ -338,7 +476,7 @@ select:focus {
   animation: fadeIn 0.8s ease-in;
 }
 
-/* === BOUTONS === */
+/* === BOUTONS GÉNÉRAUX === */
 button {
   padding: 12px 24px;
   font-size: 18px;
@@ -401,7 +539,7 @@ button:focus, select:focus, input[type="radio"]:focus {
   }
 
   .modal-content {
-    width: 90%;
+    width: 90% !important;
   }
 
   .qcm-question {
@@ -411,43 +549,38 @@ button:focus, select:focus, input[type="radio"]:focus {
   .result {
     margin-top: 20px;
   }
-  .login-container {
-    margin: 20px auto;
-    max-width: 300px;
-    background-color: rgba(255,255,255,0.9);
-    padding: 15px;
-    border-radius: 10px;
-    text-align: center;
-    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  @keyframes bounceIn {
+  0% {
+    transform: scale(0.5);
+    opacity: 0;
   }
-  .question-box {
-    margin: 30px auto;
-    max-width: 600px;
-    background: rgba(240, 248, 255, 0.8); /* Fond légèrement transparent */
-    padding: 20px;
-    border-radius: 12px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  60% {
+    transform: scale(1.1);
+    opacity: 1;
   }
-  
-  h2, p {
-    color: #333; /* Texte foncé pour un meilleur contraste */
+  80% {
+    transform: scale(0.95);
   }
-  
-  button {
-    margin: 15px;
-    padding: 10px 20px;
-    font-size: 16px;
-    border-radius: 10px;
-    background-color: #f8f9fa; /* Boutons clairs */
-    color: #333;
+  100% {
+    transform: scale(1);
   }
-  
-  #timer {
-    font-size: 20px;
-    font-weight: bold;
-    margin-bottom: 15px;
-    color: #d9534f;
-  }
-  
+}
+#memory-game div {
+  width: 80px;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  border: 2px solid #ccc;
+  font-size: 2em;
+  transition: background 0.3s;
+}
+#memory-game div:hover {
+  background-color: #f8f8f8;
+}
+
+
+
   
 }
